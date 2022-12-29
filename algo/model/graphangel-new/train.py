@@ -51,6 +51,8 @@ def train(model_args, data):
     true_relations = defaultdict(set)
     for head, tail, relation in train_triplets + valid_triplets + test_triplets:
         true_relations[(head, tail)].add(relation)
+        # to evaluate the tail
+        # true_tails[(head, relation)].add(tail)
     best_valid_acc = 0.0
     final_res = None  # acc, mrr, mr, hit1, hit3, hit10
 
@@ -159,3 +161,24 @@ def calculate_ranking_metrics(triplets, scores, true_relations):
     hit10 = float(np.mean(rankings <= 10))
 
     return mrr, mr, hit1, hit3, hit10
+
+# simply replace relation with tail but cost much time
+# def calculate_ranking_metrics(triplets, scores, true_tails):
+#     for i in range(scores.shape[0]):
+#         head, tail, relation = triplets[i]
+#         for j in true_tails[head, relation] - {tail}:
+#             scores[i, j] -= 1.0
+
+#     sorted_indices = np.argsort(-scores, axis=1)
+#     relations = np.array(triplets)[0:scores.shape[0], 2]
+#     sorted_indices -= np.expand_dims(relations, 1)
+#     zero_coordinates = np.argwhere(sorted_indices == 0)
+#     rankings = zero_coordinates[:, 1] + 1
+
+#     mrr = float(np.mean(1 / rankings))
+#     mr = float(np.mean(rankings))
+#     hit1 = float(np.mean(rankings <= 1))
+#     hit3 = float(np.mean(rankings <= 3))
+#     hit10 = float(np.mean(rankings <= 10))
+
+#     return mrr, mr, hit1, hit3, hit10

@@ -171,3 +171,5 @@ def load_data(model_args):
         path_params = None
 
     return triplets, paths, len(relation_dict), neighbor_params, path_params
+    # to evaluate tail
+    # return triplets, paths, len(entity_dict), neighbor_params, path_params

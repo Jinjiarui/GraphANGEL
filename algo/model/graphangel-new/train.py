@@ -20,12 +20,20 @@ def train(model_args, data):
     train_entity_pairs = torch.LongTensor(np.array([[triplet[0], triplet[1]] for triplet in train_triplets], np.int32))
     valid_entity_pairs = torch.LongTensor(np.array([[triplet[0], triplet[1]] for triplet in valid_triplets], np.int32))
     test_entity_pairs = torch.LongTensor(np.array([[triplet[0], triplet[1]] for triplet in test_triplets], np.int32))
+    # to evaluate the tail
+    # train_entity_pairs = torch.LongTensor(np.array([[triplet[0], triplet[2]] for triplet in train_triplets], np.int32))
+    # valid_entity_pairs = torch.LongTensor(np.array([[triplet[0], triplet[2]] for triplet in valid_triplets], np.int32))
+    # test_entity_pairs = torch.LongTensor(np.array([[triplet[0], triplet[2]] for triplet in test_triplets], np.int32))
 
     train_paths, valid_paths, test_paths = paths
 
     train_labels = torch.LongTensor(np.array([triplet[2] for triplet in train_triplets], np.int32))
     valid_labels = torch.LongTensor(np.array([triplet[2] for triplet in valid_triplets], np.int32))
     test_labels = torch.LongTensor(np.array([triplet[2] for triplet in test_triplets], np.int32))
+    # to evaluate the tail
+    # train_labels = torch.LongTensor(np.array([triplet[1] for triplet in train_triplets], np.int32))
+    # valid_labels = torch.LongTensor(np.array([triplet[1] for triplet in valid_triplets], np.int32))
+    # test_labels = torch.LongTensor(np.array([triplet[1] for triplet in test_triplets], np.int32))
 
     # define the model
     model = Angel(args, n_relations, neighbor_params, path_params)
@@ -49,6 +57,7 @@ def train(model_args, data):
 
     # prepare for top-k evaluation
     true_relations = defaultdict(set)
+    # true_tails = defaultdict(set)
     for head, tail, relation in train_triplets + valid_triplets + test_triplets:
         true_relations[(head, tail)].add(relation)
         # to evaluate the tail

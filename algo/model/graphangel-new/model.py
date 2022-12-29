@@ -119,6 +119,10 @@ class Angel(nn.Module):
                             else torch.zeros([1, self.relation_dim])], dim=0)
 
     def _get_neighbors_and_masks(self, relations, entity_pairs, train_edges):
+        # to evaluate tail
+        # tails = relations
+        # relations = entity_pairs[:,-1]
+        # entity_pairs = torch.cat((entity_pairs[:,0], relations), 1)
         edges_list = [relations]
         masks = []
         train_edges = torch.unsqueeze(train_edges, -1)  # [batch_size, 1]

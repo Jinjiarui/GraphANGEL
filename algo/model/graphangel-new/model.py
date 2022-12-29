@@ -122,7 +122,7 @@ class Angel(nn.Module):
         # to evaluate tail
         # tails = relations
         # relations = entity_pairs[:,-1]
-        # entity_pairs = torch.cat((entity_pairs[:,0], relations), 1)
+        # entity_pairs = torch.stack((entity_pairs[:,0], relations), 1)
         edges_list = [relations]
         masks = []
         train_edges = torch.unsqueeze(train_edges, -1)  # [batch_size, 1]

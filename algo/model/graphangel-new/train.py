@@ -87,6 +87,7 @@ def train(model_args, data):
         current_res = 'ACC: %.4f' % test_acc
         print('TRAIN ACC: %.4f   VALID ACC: %.4f   TEST ACC: %.4f' % (train_acc, valid_acc, test_acc))
         mrr, mr, hit1, hit3, hit10 = calculate_ranking_metrics(test_triplets, test_scores, true_relations)
+        # mrr, mr, hit1, hit3, hit10 = calculate_ranking_metrics(test_triplets, test_scores, true_tails)
         current_res += '   MRR: %.4f   MR: %.4f   H1: %.4f   H3: %.4f   H10: %.4f' % (mrr, mr, hit1, hit3, hit10)
         print('           MRR: %.4f   MR: %.4f   H1: %.4f   H3: %.4f   H10: %.4f' % (mrr, mr, hit1, hit3, hit10))
         print()
